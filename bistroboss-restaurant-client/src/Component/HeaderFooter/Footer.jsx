@@ -1,9 +1,9 @@
 const Footer = () => {
   return (
     <div>
-      <footer className="grid text-white grid-cols-1 lg:grid-cols-2 text-neutral-content">
+      <footer className="grid max-w-7xl grid-cols-1 lg:grid-cols-2 text-neutral-content">
         {/* left side  */}
-        <div className="bg-[#1F2937] flex flex-col justify-center items-center p-5 lg:p-16 space-y-3">
+        <div className="bg-[#1F2937] flex flex-col justify-center items-center  p-16 space-y-3">
           <h2 className="uppercase text-3xl">Contact Us</h2>
           {/* <svg
               width="50"
