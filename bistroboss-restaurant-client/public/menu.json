@@ -164,7 +164,7 @@
         "name": "Chicken and Walnut Salad",
         "recipe": "Pan roasted pork belly with gratin potato, braised Savoy cabbage, apples, thyme and calvados jus",
         "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-3-370x247.jpg",
-        "category": "salad",
+        "category": "popular",
         "price": 13.5
     },
     {
@@ -193,7 +193,7 @@
     },
     {
         "_id": "642c155b2c4774f05c36eeb0",
-        "name": "Chicken and Walnut Salad",
+        "name": "Chicken and Walnut ",
         "recipe": "Pan roasted pork belly with gratin potato, braised Savoy cabbage, apples, thyme and calvados jus",
         "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-3-370x247.jpg",
         "category": "soup",
@@ -276,7 +276,7 @@
         "name": "Chicken and Walnut Salad",
         "recipe": "Pan roasted pork belly with gratin potato, braised Savoy cabbage, apples, thyme and calvados jus",
         "image": "https://cristianonew.ukrdevs.com/wp-content/uploads/2016/08/product-3-370x247.jpg",
-        "category": "dessert",
+        "category": "popular",
         "price": 13.5
     },
     {
