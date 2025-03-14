@@ -5,6 +5,7 @@ import BistroBoss from './Components/BistroBoss';
 import MenuSection from './Components/MenuSection';
 import CallUs from './Components/CallUs';
 import Recommends from './Components/Recommends';
+import Featured from './Components/Featured';
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
             <MenuSection/>
             <CallUs/>
             <Recommends/>
+            <Featured/>
         </div>
     );
 };
