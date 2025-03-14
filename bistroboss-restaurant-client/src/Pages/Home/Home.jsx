@@ -4,6 +4,7 @@ import OrderOnline from './Components/OrderOnline';
 import BistroBoss from './Components/BistroBoss';
 import MenuSection from './Components/MenuSection';
 import CallUs from './Components/CallUs';
+import Recommends from './Components/Recommends';
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
             <BistroBoss/>
             <MenuSection/>
             <CallUs/>
+            <Recommends/>
         </div>
     );
 };
