@@ -6,7 +6,7 @@ const Featured = () => {
   return (
     <div className="relative">
       <div
-        className="absolute inset-0 bg-black brightness-50"
+        className="absolute bg-fixed inset-0 bg-black brightness-50"
         style={{
           backgroundImage: `url(${featureImage})`,
           backgroundSize: "cover",

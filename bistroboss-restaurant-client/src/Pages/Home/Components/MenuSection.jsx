@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SectionTitle from "../../../Component/SectionTitle";
-import MenuItems from "./MenuItems";
+import MenuItems from "./../../../Component/MenuItems";
 
 const MenuSection = () => {
   const [menuItem, setMenuItem] = useState([]);
@@ -22,12 +22,12 @@ const MenuSection = () => {
       <SectionTitle
         subTitle="---Check it out---"
         sectionTitle="From Our Menu"
-      />
+      ></SectionTitle>
 
       {/* popular item menu item section section  */}
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 lg:my-8">
         {menuItem.map((item) => (
-          <MenuItems key={item.id} item={item}></MenuItems>
+          <MenuItems key={item._id} item={item}></MenuItems>
         ))}
       </div>
 

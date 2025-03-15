@@ -25,7 +25,7 @@ const Recommends = () => {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-10">
         {foodItem.slice(0,3).map((data) => (
-          <FoodCard key={data.id} item={data}></FoodCard>
+          <FoodCard key={data._id} item={data}></FoodCard>
         ))}
       </div>
     </div>
