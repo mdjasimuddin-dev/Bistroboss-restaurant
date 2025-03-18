@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import SectionTitle from "../../../Component/SectionTitle";
-import FoodCard from "../../../Component/FoodCard";
+import SectionTitle from "../../../Components/SectionTitle";
+import FoodCard from "../../../Components/FoodCard";
 
 const Recommends = () => {
   const [foodItem, setFoodItem] = useState([]);

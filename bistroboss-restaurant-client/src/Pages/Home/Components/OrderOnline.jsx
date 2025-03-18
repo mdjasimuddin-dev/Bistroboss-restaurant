@@ -1,5 +1,5 @@
 import React from 'react';
-import SectionTitle from '../../../Component/SectionTitle';
+import SectionTitle from '../../../Components/SectionTitle';
 import SwiperSlider from './SwiperSlider';
 
 const OrderOnline = () => {

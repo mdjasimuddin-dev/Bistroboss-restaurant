@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import SectionTitle from "../../../Component/SectionTitle";
-import MenuItems from "./../../../Component/MenuItems";
+import SectionTitle from "../../../Components/SectionTitle";
+import MenuItems from "../../../Components/MenuItems";
 
 const MenuSection = () => {
   const [menuItem, setMenuItem] = useState([]);

@@ -1,4 +1,3 @@
-import SectionTitle from "../../../Component/SectionTitle";
 import featureImage from "./../../../assets/Home/featured.jpg";
 import { Link } from "react-router-dom";
 
