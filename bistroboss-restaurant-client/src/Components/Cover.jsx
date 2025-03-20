@@ -6,7 +6,9 @@ const Cover = ({ bgImage, title, description }) => {
     >
       <div className="hero-content text-neutral-content text-center bg-[#15151599] md:px-36 md:py-10">
         <div className="max-w-md space-y-3">
-          <h1 className="text-6xl font-cinzel font-bold uppercase">{title}</h1>
+          <h1 className="text-5xl md:text-6xl font-cinzel font-bold uppercase">
+            {title}
+          </h1>
           <p
             className={`${
               description?.length <= 30 ? "font-cinzel" : "font-inter"

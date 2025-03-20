@@ -4,6 +4,7 @@ import bgDessert from "./../../assets/menu/dessert-bg.jpeg";
 import bgPizza from "./../../assets/menu/pizza-bg.jpg";
 import bgSalad from "./../../assets/menu/salad-bg.jpg";
 import bgSoup from "./../../assets/menu/soup-bg.jpg";
+import bgDrink from "./../../assets/menu/drink-bg.jpeg";
 import MenuCategories from "./Components/MenuCategories";
 import { useEffect, useState } from "react";
 import Cover from "../../Components/Cover";
@@ -23,11 +24,11 @@ const Menu = () => {
   const pizzaItems = menu.filter((items) => items.category === "pizza");
   const saladItems = menu.filter((items) => items.category === "salad");
   const soupItems = menu.filter((items) => items.category === "soup");
-
+  const drinkItems = menu.filter((items) => items.category === "drinks");
 
   return (
     <div>
-      <Title> Bistro Boss | Home</Title>
+      <Title> Bistro Boss | Menu</Title>
 
       {/* banner section  */}
       <Cover
@@ -44,28 +45,35 @@ const Menu = () => {
       <MenuCategories
         items={dessertItems}
         img={bgDessert}
-        title="Desserts"
+        title="desserts"
         description="Intrinsicly provide access to timely e-services with fully researched potentialities."
       ></MenuCategories>
 
       <MenuCategories
         items={pizzaItems}
         img={bgPizza}
-        title="Pizza"
+        title="pizza"
         description="Intrinsicly provide access to timely e-services with fully researched potentialities."
       ></MenuCategories>
 
       <MenuCategories
         items={saladItems}
         img={bgSalad}
-        title="Salads"
+        title="salads"
         description="Intrinsicly provide access to timely e-services with fully researched potentialities."
       ></MenuCategories>
 
       <MenuCategories
         items={soupItems}
         img={bgSoup}
-        title="Soups"
+        title="soups"
+        description="Intrinsicly provide access to timely e-services with fully researched potentialities."
+      ></MenuCategories>
+
+      <MenuCategories
+        items={drinkItems}
+        img={bgDrink}
+        title="drink"
         description="Intrinsicly provide access to timely e-services with fully researched potentialities."
       ></MenuCategories>
     </div>
