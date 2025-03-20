@@ -94,7 +94,7 @@ const Navbar = () => {
           </ul>
         </div>
         <div>
-          <a className="lg:btn lg:btn-ghost lg:text-xl uppercase">Bistro Boss</a>
+          <Link to='/' className="btn btn-ghost lg:text-xl uppercase hover:bg-transparent hover:border-none hover:text-white">Bistro Boss</Link>
           <p className="tracking-[3px] lg:tracking-[6px]">Restaurant</p>
         </div>
       </div>
