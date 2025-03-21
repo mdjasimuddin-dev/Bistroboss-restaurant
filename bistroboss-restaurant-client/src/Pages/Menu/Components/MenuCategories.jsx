@@ -3,7 +3,6 @@ import Cover from "../../../Components/Cover";
 import MenuItems from "../../../Components/MenuItems";
 
 const MenuCategories = ({ items, img, title }) => {
-  console.log(title);
   return (
     <div>
       {title && (
@@ -23,7 +22,7 @@ const MenuCategories = ({ items, img, title }) => {
       {/* button  */}
       <div className="flex justify-center my-5 lg:my-10">
         <Link
-          to={`/shop/${title}`}
+          to={`/shop/${title ? title : "salads"}`}
           className="btn border-0 uppercase bg-transparent rounded-xl border-b-4 border-[#BB8506] text-xl hover:border-t-4 hover:border-[#BB8506] hover:border-b-0 hover:bg-transparent"
         >
           Order Your Favorite Food
