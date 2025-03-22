@@ -7,19 +7,20 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import SectionTitle from "../../../Components/SectionTitle";
 import { useEffect, useState } from "react";
-import { Rating } from '@smastrom/react-rating'
-import '@smastrom/react-rating/style.css'
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 
-import quoteImg from './../../../assets/Home/quote-left.png'
+import quoteImg from "./../../../assets/Home/quote-left.png";
 
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch("./reviews.json")
+    fetch("http://localhost:5000/reviews")
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
+  
   return (
     <div className="my-5">
       <SectionTitle
@@ -27,7 +28,12 @@ const Testimonials = () => {
         sectionTitle="Testimonials"
       ></SectionTitle>
 
-      <Swiper navigation={true} loop={true} modules={[Navigation]} className="mySwiper">
+      <Swiper
+        navigation={true}
+        loop={true}
+        modules={[Navigation]}
+        className="mySwiper"
+      >
         {reviews.map((review) => (
           <SwiperSlide key={review._id}>
             <div className="flex flex-col items-center lg:mx-24 lg:my-16 space-y-3">
@@ -36,7 +42,7 @@ const Testimonials = () => {
                 value={review.rating}
                 readOnly
               />
-              <img  src={quoteImg} alt="" />
+              <img src={quoteImg} alt="" />
               <p className="text-center">{review.details}</p>
               <h3 className="text-xl text-orange-300 font-bold">
                 {review.name}

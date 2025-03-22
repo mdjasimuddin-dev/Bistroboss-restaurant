@@ -49,6 +49,15 @@ async function run() {
         //==================== menu item route start end =======================
 
 
+
+        //==================== reviews route start  ===================
+        app.get('/reviews', async (req, res) => {
+            const result = await reviewCollection.find().toArray()
+            res.send(result)
+        })
+        //==================== reviews route start  ===================
+
+
         // ================= single data get start =========================
 
 
@@ -74,12 +83,7 @@ async function run() {
 
 
 
-        //==================== review text get request start ===================
-        app.get('/reviews', async (req, res) => {
-            const result = await reviewCollection.find().toArray()
-            res.send(result)
-        })
-        //==================== review text get request end ===================
+        
 
 
 

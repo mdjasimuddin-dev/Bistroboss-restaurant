@@ -7,7 +7,6 @@ const MenuSection = () => {
 
   const popularMenuItems = menu.filter((item) => item.category === "popular");
 
-  console.log(popularMenuItems);
 
   // useEffect(() => {
   //   fetch("/menu.json")
