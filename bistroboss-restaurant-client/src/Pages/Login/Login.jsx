@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import loginImg from "./../../assets/login/authentication1.png";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
   validateCaptcha,
 } from "react-simple-captcha";
+import SocialLogin from "./components/SocialLogin";
 
 const Login = () => {
   const captchaRef = useRef(null);
@@ -29,25 +31,25 @@ const Login = () => {
       setDisable(false);
     } else {
       console.log("Sorry! Not matched captcha", inputUserCaptcha);
-      setDisable(true)
+      setDisable(true);
     }
   };
 
   return (
     <div className="my-10">
       <div
-        className={`hero h-[700px] bg-base-200 p-10 flex flex-col justify-center items-center`}
+        className={`hero bg-base-200 p-10 flex flex-col justify-center items-center`}
       >
         <div className="flex">
-          <img src={loginImg} alt="" className="w-1/2 bg-cover" />
+          <img src={loginImg} alt="" className=" w-1/2 bg-cover" />
 
           {/* form part  */}
 
           <div className="card-body">
             <h1 className="text-5xl font-inter font-bold text-center">Login</h1>
-            <form onSubmit={handleSingIn}>
+            <form onSubmit={handleSingIn} className="space-y-3">
               <fieldset className="fieldset">
-                <label className="fieldset-label text-xl py-2">Email</label>
+                <label className="fieldset-label text-xl">Email</label>
                 <input
                   type="email"
                   name="email"
@@ -57,7 +59,7 @@ const Login = () => {
               </fieldset>
 
               <fieldset className="fieldset">
-                <label className="fieldset-label text-xl py-2">Password</label>
+                <label className="fieldset-label text-xl">Password</label>
                 <input
                   type="password"
                   name="password"
@@ -91,6 +93,19 @@ const Login = () => {
                 Sign In
               </button>
             </form>
+
+            <div className="form-control mt-6">
+              <div className="text-[#d1a054b3] text-center text-xl space-y-3">
+                <p>
+                  New here?
+                  <Link className="text-blue-600 font-bold ml-2" to="/signup">
+                    Create a New Account
+                  </Link>
+                </p>
+                <p className="text-black">Or sign up with</p>
+                <SocialLogin />
+              </div>
+            </div>
           </div>
         </div>
       </div>
