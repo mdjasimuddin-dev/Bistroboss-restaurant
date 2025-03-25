@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import loginImg from "./../../assets/login/authentication1.png";
 import {
@@ -7,10 +7,12 @@ import {
   validateCaptcha,
 } from "react-simple-captcha";
 import SocialLogin from "./components/SocialLogin";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Login = () => {
   const captchaRef = useRef(null);
   const [disable, setDisable] = useState(true);
+
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -34,6 +36,8 @@ const Login = () => {
       setDisable(true);
     }
   };
+
+
 
   return (
     <div className="my-10">

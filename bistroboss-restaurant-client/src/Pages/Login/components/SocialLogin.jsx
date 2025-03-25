@@ -1,6 +1,26 @@
+import { useContext } from "react";
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from "../../../Provider/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const SocialLogin = () => {
+  const navigate = useNavigate();
+
+  const { handleGoogleLogin } = useContext(AuthContext);
+
+  const handleGoogleSignIn = (e) => {
+    e.preventDefault();
+    handleGoogleLogin()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   // const handleloginWithGoogle = (e) => {
   //     e.preventDefault();
 
@@ -37,7 +57,7 @@ const SocialLogin = () => {
   return (
     <div>
       <button
-        // onClick={handleloginWithGoogle}
+        onClick={handleGoogleSignIn}
         className="btn border border-black m-2"
       >
         <FaGoogle></FaGoogle> Google
