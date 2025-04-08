@@ -1,8 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
 import { FaUserCircle } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider";
+import { LuLogOut } from "react-icons/lu";
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+
   const navbarOptions = (
     <>
       <li>
@@ -20,15 +25,6 @@ const Navbar = () => {
           className="uppercase  hover:text-red-400 lg:hover:text-[#EEFF25] font-inter font-bold"
         >
           Contact Us
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink
-          to="/dashboard"
-          className="uppercase hover:text-red-400 lg:hover:text-[#EEFF25] font-inter font-bold"
-        >
-          Dashboard
         </NavLink>
       </li>
 
@@ -54,14 +50,37 @@ const Navbar = () => {
         </NavLink>
       </li>
 
-      <li>
-        <NavLink
-          to="/login"
-          className="uppercase hover:text-red-400 lg:hover:text-[#EEFF25] font-inter font-bold"
-        >
-          Sign In <FaUserCircle size={30} className="font-white" />
-        </NavLink>
-      </li>
+      {user ? (
+        <>
+          <li>
+            <NavLink
+              to="/dashboard"
+              className="uppercase hover:text-red-400 lg:hover:text-[#EEFF25] font-inter font-bold"
+            >
+              Dashboard
+            </NavLink>
+          </li>
+
+          <li>
+            <button onClick={logout} className="btn uppercase font-inter font-bold"
+            >
+              Logout <LuLogOut size={30} className="font-white" />
+            </button>
+          </li>
+        </>
+      ) : (
+        <>
+          {" "}
+          <li>
+            <NavLink
+              to="/login"
+              className="btn uppercase hover:text-red-400 lg:hover:text-[#EEFF25] font-inter font-bold"
+            >
+              Sign In <FaUserCircle size={30} className="font-white" />
+            </NavLink>
+          </li>{" "}
+        </>
+      )}
     </>
   );
 
@@ -94,7 +113,12 @@ const Navbar = () => {
           </ul>
         </div>
         <div>
-          <Link to='/' className="btn btn-ghost lg:text-xl uppercase hover:bg-transparent hover:border-none hover:text-white">Bistro Boss</Link>
+          <Link
+            to="/"
+            className="btn btn-ghost lg:text-xl uppercase hover:bg-transparent hover:border-none hover:text-white"
+          >
+            Bistro Boss
+          </Link>
           <p className="tracking-[3px] lg:tracking-[6px]">Restaurant</p>
         </div>
       </div>

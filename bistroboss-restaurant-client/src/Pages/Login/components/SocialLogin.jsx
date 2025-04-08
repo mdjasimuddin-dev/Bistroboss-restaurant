@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { FaGoogle } from "react-icons/fa";
+import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../../Provider/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SocialLogin = () => {
   const navigate = useNavigate();
@@ -12,9 +12,11 @@ const SocialLogin = () => {
     e.preventDefault();
     handleGoogleLogin()
       .then((result) => {
-        const user = result.user;
+        const user = result?.user?.displayName;
         console.log(user);
-        navigate("/");
+        if (user) {
+          navigate("/");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -56,17 +58,17 @@ const SocialLogin = () => {
   //   };
   return (
     <div>
-      <button
+      <Link
         onClick={handleGoogleSignIn}
-        className="btn border border-black m-2"
+        className="btn border border-black rounded-full m-2"
       >
-        <FaGoogle></FaGoogle> Google
+        <FaFacebookF />
+      </Link>
+      <button className="btn border border-black rounded-full m-2">
+        <FaGoogle></FaGoogle>
       </button>
-      <button className="btn border border-black m-2">
-        <FaGoogle></FaGoogle> Google
-      </button>
-      <button className="btn border border-black m-2">
-        <FaGoogle></FaGoogle> Google
+      <button className="btn border border-black rounded-full m-2">
+        <FaGithub />
       </button>
     </div>
   );

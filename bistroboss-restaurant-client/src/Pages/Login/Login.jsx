@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import loginImg from "./../../assets/login/authentication1.png";
+import loginImg from "./../../assets/login/authentication2.png";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
@@ -12,7 +12,6 @@ import { AuthContext } from "../../Provider/AuthProvider";
 const Login = () => {
   const captchaRef = useRef(null);
   const [disable, setDisable] = useState(true);
-
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -37,21 +36,20 @@ const Login = () => {
     }
   };
 
-
-
   return (
     <div className="my-10">
       <div
-        className={`hero bg-base-200 p-10 flex flex-col justify-center items-center`}
+        className={`hero bg-base-200 lg:p-10 flex flex-col justify-center items-center`}
       >
-        <div className="flex">
-          <img src={loginImg} alt="" className=" w-1/2 bg-cover" />
+        <div className="flex flex-col lg:flex-row">
+          <div className="lg:w-1/2 flex flex-col items-center justify-center" >
+            <img src={loginImg} alt=""/>
+          </div>
 
           {/* form part  */}
-
           <div className="card-body">
-            <h1 className="text-5xl font-inter font-bold text-center">Login</h1>
-            <form onSubmit={handleSingIn} className="space-y-3">
+            <h1 className="text-3xl lg:text-5xl font-inter font-bold text-center">Login</h1>
+            <form onSubmit={handleSingIn} className="space-y-1 lg:space-y-3">
               <fieldset className="fieldset">
                 <label className="fieldset-label text-xl">Email</label>
                 <input
