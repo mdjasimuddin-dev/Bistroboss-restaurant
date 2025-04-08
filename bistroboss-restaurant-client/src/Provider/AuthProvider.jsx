@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  FacebookAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -33,12 +34,27 @@ const AuthProvider = ({ children }) => {
     return signOut(auth);
   };
 
+   // =============== Facebook login function ===============
+   const facebookProvider = new FacebookAuthProvider();
+   const handleFacebookLogin = () => {
+     setLoading(true);
+     return signInWithPopup(auth, facebookProvider);
+   };
+
   // =============== google login function ===============
   const googleProvider = new GoogleAuthProvider();
   const handleGoogleLogin = () => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
+
+
+    // =============== Github login function ===============
+    const githubProvider = new GoogleAuthProvider();
+    const handleGithubLogin = () => {
+      setLoading(true);
+      return signInWithPopup(auth, githubProvider);
+    };
 
   // ============== monitoring current user ==============
   useEffect(() => {
@@ -61,7 +77,9 @@ const AuthProvider = ({ children }) => {
     setLoading,
     createUser,
     signInUser,
+    handleFacebookLogin,
     handleGoogleLogin,
+    handleGithubLogin,
     logout
   };
 

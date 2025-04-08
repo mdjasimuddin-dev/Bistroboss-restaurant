@@ -10,7 +10,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { createUser, handleGoogleLogin } = useContext(AuthContext);
+  const { createUser} = useContext(AuthContext);
 
   const handleSingUp = (e) => {
     e.preventDefault();
@@ -22,6 +22,7 @@ const SignUp = () => {
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
+        navigate('/')
       })
       .catch((err) => {
         console.log(err);

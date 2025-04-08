@@ -6,7 +6,27 @@ import { Link, useNavigate } from "react-router-dom";
 const SocialLogin = () => {
   const navigate = useNavigate();
 
-  const { handleGoogleLogin } = useContext(AuthContext);
+  const { handleFacebookLogin, handleGoogleLogin, handleGithubLogin} = useContext(AuthContext);
+
+// handle facebook signin function 
+
+  const handleFacebookSignIn = (e) => {
+    e.preventDefault();
+    handleFacebookLogin()
+      .then((result) => {
+        const user = result?.user?.displayName;
+        console.log(user);
+        if (user) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+  // handle google signin function 
 
   const handleGoogleSignIn = (e) => {
     e.preventDefault();
@@ -22,6 +42,26 @@ const SocialLogin = () => {
         console.log(error);
       });
   };
+  
+  // handle github signin function 
+
+  const handleGithubSignIn = (e) => {
+    e.preventDefault();
+    handleGithubLogin()
+      .then((result) => {
+        const user = result?.user?.displayName;
+        console.log(user);
+        if (user) {
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+
+
 
   // const handleloginWithGoogle = (e) => {
   //     e.preventDefault();
@@ -59,15 +99,15 @@ const SocialLogin = () => {
   return (
     <div>
       <Link
-        onClick={handleGoogleSignIn}
+        onClick={handleFacebookSignIn}
         className="btn border border-black rounded-full m-2"
       >
         <FaFacebookF />
       </Link>
-      <button className="btn border border-black rounded-full m-2">
+      <button onClick={handleGoogleSignIn} className="btn border border-black rounded-full m-2">
         <FaGoogle></FaGoogle>
       </button>
-      <button className="btn border border-black rounded-full m-2">
+      <button onClick={handleGithubSignIn} className="btn border border-black rounded-full m-2">
         <FaGithub />
       </button>
     </div>
