@@ -1,9 +1,8 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import loginImg from "./../../assets/login/authentication2.png";
 import SocialLogin from "./../Login/components/SocialLogin";
 import { AuthContext } from "../../Provider/AuthProvider";
-import { use } from "react";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -11,6 +10,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { createUser} = useContext(AuthContext);
+
 
   const handleSingUp = (e) => {
     e.preventDefault();
@@ -56,7 +56,7 @@ const SignUp = () => {
                   type="text"
                   name="name"
                   className="input w-full text-base px-3 py-6 border-none"
-                  placeholder="Enter your email"
+                  placeholder="Enter your Name"
                 />
               </fieldset>
 

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginImg from "./../../assets/login/authentication2.png";
 import {
   loadCaptchaEnginge,
@@ -12,6 +12,8 @@ import { AuthContext } from "../../Provider/AuthProvider";
 const Login = () => {
   const captchaRef = useRef(null);
   const [disable, setDisable] = useState(true);
+  const { signInUser } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -23,6 +25,15 @@ const Login = () => {
     const email = form.get("email");
     const password = form.get("password");
     console.log("your email :", email, "\n Your Password :", password);
+
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result?.user);
+        navigate('/')
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleCaptcha = () => {
@@ -42,13 +53,15 @@ const Login = () => {
         className={`hero bg-base-200 lg:p-10 flex flex-col justify-center items-center`}
       >
         <div className="flex flex-col lg:flex-row">
-          <div className="lg:w-1/2 flex flex-col items-center justify-center" >
-            <img src={loginImg} alt=""/>
+          <div className="lg:w-1/2 flex flex-col items-center justify-center">
+            <img src={loginImg} alt="" />
           </div>
 
           {/* form part  */}
           <div className="card-body">
-            <h1 className="text-3xl lg:text-5xl font-inter font-bold text-center">Login</h1>
+            <h1 className="text-3xl lg:text-5xl font-inter font-bold text-center">
+              Login
+            </h1>
             <form onSubmit={handleSingIn} className="space-y-1 lg:space-y-3">
               <fieldset className="fieldset">
                 <label className="fieldset-label text-xl">Email</label>

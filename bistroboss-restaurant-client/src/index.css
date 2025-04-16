@@ -6,3 +6,8 @@
 }
 @import "tailwindcss";
 @plugin "daisyui";
+
+
+.active{
+    color: #EEFF25;
+}

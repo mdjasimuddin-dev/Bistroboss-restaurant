@@ -1,12 +1,15 @@
 import { Link, NavLink } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
-import { FaUserCircle } from "react-icons/fa";
-import { useContext } from "react";
-import { AuthContext } from "../../Provider/AuthProvider";
+import { useEffect, useState } from "react";
 import { LuLogOut } from "react-icons/lu";
+import axios from "axios";
+import useAuth from "../../Hooks/useAuth";
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useAuth();
+  const profilePhoto = user?.photoURL;
+  const [cartItem, setCartItem] = useState(0);
+  console.log(cartItem);
 
   const navbarOptions = (
     <>
@@ -43,10 +46,15 @@ const Navbar = () => {
           className="uppercase  hover:text-red-400 lg:hover:text-[#EEFF25] font-inter font-bold "
         >
           Our Shop
-          <TiShoppingCart size={32} className="mr-2 relative rounded-full " />
-          <p className="absolute w-5 h-5 bg-red-600 text-[10px] text-white lg:text-xs left-28 lg:right-2 rounded-full flex items-center justify-center p-2">
-            +2
-          </p>
+        </NavLink>
+      </li>
+
+      <li>
+        <NavLink to="/cartList">
+          <TiShoppingCart size={32} className="relative rounded-full " />
+          <div className="absolute bg-red-600 w-5 h-5 text-white rounded-full ml-6 mb-5 text-center">
+            {cartItem.length}
+          </div>
         </NavLink>
       </li>
 
@@ -62,9 +70,19 @@ const Navbar = () => {
           </li>
 
           <li>
-            <button onClick={logout} className="btn uppercase font-inter font-bold"
+            <img
+              src={profilePhoto}
+              alt="profile pic"
+              className="rounded-full w-16"
+            />
+          </li>
+
+          <li>
+            <button
+              onClick={logout}
+              className="btn btn-sm uppercase font-inter font-bold"
             >
-              Logout <LuLogOut size={30} className="font-white" />
+              <LuLogOut size={23} className="font-white" />
             </button>
           </li>
         </>
@@ -74,9 +92,9 @@ const Navbar = () => {
           <li>
             <NavLink
               to="/login"
-              className="btn uppercase hover:text-red-400 lg:hover:text-[#EEFF25] font-inter font-bold"
+              className="btn ml-5 uppercase hover:text-red-400 lg:hover:text-[#EEFF25] lg:hover:bg-transparent font-inter font-bold"
             >
-              Sign In <FaUserCircle size={30} className="font-white" />
+              Sign In
             </NavLink>
           </li>{" "}
         </>
@@ -84,8 +102,20 @@ const Navbar = () => {
     </>
   );
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:5000/cart/${user?.email}`)
+      .then((data) => {
+        console.log(data);
+        setCartItem(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
-    <div className="navbar fixed opacity-30  z-10 text-white shadow-sm bg-black max-w-7xl h-24 top-0 ">
+    <div className="navbar fixed z-10 text-white shadow-sm bg-black max-w-7xl h-24 top-0 ">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

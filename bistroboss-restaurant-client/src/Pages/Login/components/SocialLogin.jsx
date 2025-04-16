@@ -1,14 +1,19 @@
 import { useContext } from "react";
 import { FaFacebookF, FaGithub, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../../Provider/AuthProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const SocialLogin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const { handleFacebookLogin, handleGoogleLogin, handleGithubLogin} = useContext(AuthContext);
+  const from = location.state || "/"
+  console.log(from);
 
-// handle facebook signin function 
+  const { handleFacebookLogin, handleGoogleLogin, handleGithubLogin } =
+    useContext(AuthContext);
+
+  // handle facebook signin function
 
   const handleFacebookSignIn = (e) => {
     e.preventDefault();
@@ -17,7 +22,7 @@ const SocialLogin = () => {
         const user = result?.user?.displayName;
         console.log(user);
         if (user) {
-          navigate("/");
+          navigate(from, {replace : true});
         }
       })
       .catch((error) => {
@@ -25,8 +30,7 @@ const SocialLogin = () => {
       });
   };
 
-
-  // handle google signin function 
+  // handle google signin function
 
   const handleGoogleSignIn = (e) => {
     e.preventDefault();
@@ -35,15 +39,15 @@ const SocialLogin = () => {
         const user = result?.user?.displayName;
         console.log(user);
         if (user) {
-          navigate("/");
+          navigate(from, {replace : true});
         }
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  
-  // handle github signin function 
+
+  // handle github signin function
 
   const handleGithubSignIn = (e) => {
     e.preventDefault();
@@ -52,16 +56,13 @@ const SocialLogin = () => {
         const user = result?.user?.displayName;
         console.log(user);
         if (user) {
-          navigate("/");
+          navigate(from, {replace : true});
         }
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-
-
 
   // const handleloginWithGoogle = (e) => {
   //     e.preventDefault();
@@ -104,10 +105,16 @@ const SocialLogin = () => {
       >
         <FaFacebookF />
       </Link>
-      <button onClick={handleGoogleSignIn} className="btn border border-black rounded-full m-2">
+      <button
+        onClick={handleGoogleSignIn}
+        className="btn border border-black rounded-full m-2"
+      >
         <FaGoogle></FaGoogle>
       </button>
-      <button onClick={handleGithubSignIn} className="btn border border-black rounded-full m-2">
+      <button
+        onClick={handleGithubSignIn}
+        className="btn border border-black rounded-full m-2"
+      >
         <FaGithub />
       </button>
     </div>

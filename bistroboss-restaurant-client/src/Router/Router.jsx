@@ -7,6 +7,8 @@ import Shop from "../Pages/Shop/Shop";
 import Contact from "../Pages/Contact/Contact";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/Signup/SignUp";
+import PrivateRoutes from "./PrivateRoutes";
+import Dashboard from "../Layout/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +51,11 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
     ],
+  },
+
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 

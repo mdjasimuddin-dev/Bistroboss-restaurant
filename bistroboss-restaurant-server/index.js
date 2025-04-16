@@ -55,18 +55,28 @@ async function run() {
             const result = await reviewCollection.find().toArray()
             res.send(result)
         })
-        //==================== reviews route start  ===================
+        //==================== reviews route close  ===================
 
 
-        // ================= single data get start =========================
+        // ================= add to Cart route  =========================
+        app.post('/cart', async (req, res) => {
+            const reqBody = req.body
+            console.log(reqBody);
+            const result = await cartCollection.insertOne(reqBody)
+            res.send(result)
+        })
 
 
+        // ================= find cart item =========================
+        app.get('/cart/:email', async (req, res) => {
+            const userEmail = req.params.email
+            const filter = {email : userEmail}
+            const result = await cartCollection.find(filter).toArray()
+            res.send(result)
+        })
 
-        // ============================ single data get end =========================
 
-
-
-        // ================== Item Update patch request start =================
+        // ================== Item Update route start =================
 
         // ================== Item Update patch request end =================
 
@@ -83,7 +93,7 @@ async function run() {
 
 
 
-        
+
 
 
 
