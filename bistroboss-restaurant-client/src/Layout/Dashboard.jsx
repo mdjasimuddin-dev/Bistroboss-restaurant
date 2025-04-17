@@ -1,35 +1,120 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { IoMdHome, IoMdMenu } from "react-icons/io";
+import { MdEmail, MdOutlineRestaurant } from "react-icons/md";
+import { FaBook, FaList, FaShoppingBag, FaUser, FaUsers } from "react-icons/fa";
 
 const Dashboard = () => {
   return (
     <div className="flex">
       {/* left side  */}
-      <div className="w-64 bg-amber-500 min-h-screen">
-        <ul>
+      <div className="w-64 bg-[#D1A054] min-h-screen px-4 py-10">
+        <div className="">
+          <h1 className="font-cinzel text-2xl text-black font-bold uppercase">
+            Bistro Boss
+          </h1>
+          <p className="text-base font-bold font-cinzel tracking-[6px]">
+            Restaurant
+          </p>
+        </div>
+
+        <ul className="mt-16 space-y-8">
           <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink
+              to="/dashboard"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <IoMdHome size={26} className="mr-3" />
+              Admin Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/about">About</NavLink>
+            <NavLink
+              to="/dashboard/addItems"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <MdOutlineRestaurant size={26} className="mr-3" />
+              Add Items
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/dashboard/manageItems"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <FaList size={26} className="mr-3" />
+              Manage Items
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/dashboard/mangeBookings"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <FaBook size={26} className="mr-3" />
+              Manage Bookings
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/dashboard/allUsers"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <FaUsers size={26} className="mr-3" />
+              All Users
+            </NavLink>
+          </li>
+        </ul>
+
+        <hr className=" text-white my-8" />
+
+        <ul className=" space-y-8">
+          <li>
+            <NavLink
+              to="/"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <IoMdHome size={26} className="mr-3" />
+              Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/menu">Menu</NavLink>
+            <NavLink
+              to="/menu"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <IoMdMenu size={26} className="mr-3" />
+              Menu
+            </NavLink>
           </li>
+
           <li>
-            <NavLink to="/shop">Shop</NavLink>
+            <NavLink
+              to="/shop"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <FaShoppingBag size={26} className="mr-3" />
+              Shop
+            </NavLink>
           </li>
+
           <li>
-            <NavLink to="/review">Review</NavLink>
-          </li>
-          <li>
-            <NavLink to="/contact">Contact</NavLink>
+            <NavLink
+              to="/contact"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <MdEmail size={26} className="mr-3" />
+              Contact
+            </NavLink>
           </li>
         </ul>
       </div>
 
       {/* right side  */}
-      <div>
+      <div className="py-10 mx-5">
         <Outlet />
       </div>
     </div>
