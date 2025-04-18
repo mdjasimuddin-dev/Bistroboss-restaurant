@@ -10,6 +10,8 @@ import SignUp from "../Pages/Signup/SignUp";
 import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "../Layout/Dashboard";
 import AdminHome from "../Pages/Dashboard/AdminHome";
+import UserHome from "../Pages/Dashboard/UserHome";
+import MyCart from "../Pages/Dashboard/MyCart";
 
 const router = createBrowserRouter([
   {
@@ -59,8 +61,16 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children : [
       {
-        path : '/dashboard',
+        path : '/dashboard/AdminHome',
         element : <AdminHome/>
+      },
+      {
+        path : '/dashboard/',
+        element : <UserHome/>
+      },
+      {
+        path : '/dashboard/myCarts',
+        element : <MyCart/>
       }
     ]
   },

@@ -2,7 +2,9 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { IoMdHome, IoMdMenu } from "react-icons/io";
 import { MdEmail, MdOutlineRestaurant } from "react-icons/md";
-import { FaBook, FaList, FaShoppingBag, FaUser, FaUsers } from "react-icons/fa";
+import { FaBook, FaCalendarAlt, FaList, FaShoppingBag, FaShoppingCart, FaUser, FaUsers } from "react-icons/fa";
+import { RiCurrencyFill } from "react-icons/ri";
+import { GiStarsStack } from "react-icons/gi";
 
 const Dashboard = () => {
   return (
@@ -25,9 +27,58 @@ const Dashboard = () => {
               className="flex items-center text-base uppercase font-cinzel font-bold"
             >
               <IoMdHome size={26} className="mr-3" />
-              Admin Home
+              User Home
             </NavLink>
           </li>
+
+          <li>
+            <NavLink
+              to="/dashboard/reservation"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <FaCalendarAlt  size={26} className="mr-3" />
+              Reservation
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/dashboard/reservation"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <RiCurrencyFill  size={26} className="mr-3" />
+              Payment History
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/dashboard/myCarts"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <FaShoppingCart  size={26} className="mr-3" />
+              My Cart
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/reservation"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <GiStarsStack   size={26} className="mr-3" />
+              Add Review
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/reservation"
+              className="flex items-center text-base uppercase font-cinzel font-bold"
+            >
+              <RiCurrencyFill  size={26} className="mr-3" />
+              My Booking
+            </NavLink>
+          </li>
+
           <li>
             <NavLink
               to="/dashboard/addItems"
@@ -114,7 +165,7 @@ const Dashboard = () => {
       </div>
 
       {/* right side  */}
-      <div className="py-10 mx-5">
+      <div className="w-full">
         <Outlet />
       </div>
     </div>

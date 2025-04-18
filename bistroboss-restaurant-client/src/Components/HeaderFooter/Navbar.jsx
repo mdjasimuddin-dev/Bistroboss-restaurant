@@ -1,15 +1,15 @@
 import { Link, NavLink } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { LuLogOut } from "react-icons/lu";
 import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const profilePhoto = user?.photoURL;
   const [cartItem, setCartItem] = useState(0);
-  console.log(cartItem);
 
   const navbarOptions = (
     <>
@@ -50,10 +50,10 @@ const Navbar = () => {
       </li>
 
       <li>
-        <NavLink to="/cartList">
+        <NavLink to="/dashboard/myCarts">
           <TiShoppingCart size={32} className="relative rounded-full " />
           <div className="absolute bg-red-600 w-5 h-5 text-white rounded-full ml-6 mb-5 text-center">
-            {cartItem.length}
+            {cartItem?.length ? cartItem.length : "0"}
           </div>
         </NavLink>
       </li>
@@ -112,7 +112,7 @@ const Navbar = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [cartItem]);
 
   return (
     <div className="navbar fixed z-10 text-white shadow-sm bg-black max-w-7xl h-24 top-0 ">
