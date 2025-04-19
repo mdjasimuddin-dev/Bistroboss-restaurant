@@ -4,7 +4,7 @@ import CartList from "./Components/CartList";
 import SectionTitle from "../../Components/SectionTitle";
 
 const MyCart = () => {
-  const [carts] = useCarts();
+  const [carts, refetch] = useCarts();
 
   const totalPrice = carts.reduce((total, item) => total + item.price, 0);
 
@@ -16,9 +16,9 @@ const MyCart = () => {
       ></SectionTitle>
 
       <div className="bg-white p-10 mt-5 w-2/3 mx-auto">
-        <div className=" grid grid-cols-3 text-center font-cinzel text-3xl font-semibold">
+        <div className=" grid grid-cols-3 text-center font-cinzel text-2xl font-semibold">
           <h1>Total Order : {carts.length}</h1>
-          <h1>Total Price : {totalPrice}</h1>
+          <h1>Total Price : {totalPrice.toFixed(2)}</h1>
           <p>
             <button className="btn text-2xl p-5 hover:bg-transparent border-2 border-red-400 bg-red-400 text-white hover:text-red-400">
               Payment
@@ -34,7 +34,7 @@ const MyCart = () => {
         </div>
 
         {carts.map((item, index) => (
-          <CartList items={item} index={index} key={index}></CartList>
+          <CartList items={item} index={index} key={index} refetch={refetch}></CartList>
         ))}
       </div>
     </div>

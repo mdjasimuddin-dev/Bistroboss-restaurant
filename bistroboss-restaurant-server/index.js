@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
-const { MongoClient, ServerApiVersion } = require('mongodb')
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const port = process.env.PORT || 5000
 
 
@@ -70,13 +70,19 @@ async function run() {
         // ================= find cart item =========================
         app.get('/cart/:email', async (req, res) => {
             const userEmail = req.params.email
-            const filter = {email : userEmail}
+            const filter = { email: userEmail }
             const result = await cartCollection.find(filter).toArray()
             res.send(result)
         })
 
 
-        // ================== Item Update route start =================
+        // ================== Delete Cart item =================
+        app.delete('/delete/:id', async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: new ObjectId(id) }
+            const result = await cartCollection.deleteOne(filter)
+            res.send(result)
+        })
 
         // ================== Item Update patch request end =================
 
