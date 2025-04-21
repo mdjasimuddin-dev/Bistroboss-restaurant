@@ -57,19 +57,19 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/dashboard",
+    path: "dashboard",
     element: <Dashboard />,
     children : [
+      // {
+      //   path : '/AdminHome',
+      //   element : <AdminHome/>
+      // },
       {
-        path : '/dashboard/AdminHome',
-        element : <AdminHome/>
-      },
-      {
-        path : '/dashboard/',
+        path : 'home',
         element : <UserHome/>
       },
       {
-        path : '/dashboard/myCarts',
+        path : 'myCarts',
         element : <MyCart/>
       }
     ]

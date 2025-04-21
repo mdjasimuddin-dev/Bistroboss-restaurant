@@ -106,7 +106,7 @@ const Navbar = () => {
     axios
       .get(`http://localhost:5000/cart/${user?.email}`)
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setCartItem(data.data);
       })
       .catch((err) => {

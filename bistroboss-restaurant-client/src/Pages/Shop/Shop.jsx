@@ -15,13 +15,7 @@ const Shop = () => {
   const [tabIndex, setTabIndex] = useState(initialIndex);
   const [menu] = useMenu();
 
-  // useEffect(() => {
-  //   fetch("./menu.json")
-  //     .then((res) => res.json())
-  //     .then((data) => setMenu(data));
-  // }, []);
 
-  //   const offerItems = menu.filter((items) => items.category === "offered");
   const dessertItems = menu.filter((items) => items.category === "dessert");
   const pizzaItems = menu.filter((items) => items.category === "pizza");
   const saladItems = menu.filter((items) => items.category === "salad");

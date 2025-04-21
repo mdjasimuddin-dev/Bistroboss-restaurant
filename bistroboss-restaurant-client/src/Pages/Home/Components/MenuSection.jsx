@@ -1,6 +1,7 @@
 import SectionTitle from "../../../Components/SectionTitle";
 import MenuItems from "../../../Components/MenuItems";
 import useMenu from "../../../Hooks/useMenu";
+import { Link } from "react-router-dom";
 
 const MenuSection = () => {
   const [menu] = useMenu();
@@ -35,12 +36,12 @@ const MenuSection = () => {
       </div>
 
       <div className="flex justify-center my-5 lg:my-10">
-        <button
-          // onClick={() => handleAddtoCart(item)}
+        <Link
+          to="/menu"
           className="btn border-0 uppercase bg-transparent rounded-xl border-b-4 border-[#BB8506] text-xl hover:border-t-4 hover:border-[#BB8506] hover:border-b-0 hover:bg-transparent"
         >
           View Full Menu
-        </button>
+        </Link>
       </div>
     </div>
   );

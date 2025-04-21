@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
+  GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -28,18 +29,18 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-   // ============== User handle logout function ===============
-   const logout = () => {
+  // ============== User handle logout function ===============
+  const logout = () => {
     setLoading(true);
     return signOut(auth);
   };
 
-   // =============== Facebook login function ===============
-   const facebookProvider = new FacebookAuthProvider();
-   const handleFacebookLogin = () => {
-     setLoading(true);
-     return signInWithPopup(auth, facebookProvider);
-   };
+  // =============== Facebook login function ===============
+  const facebookProvider = new FacebookAuthProvider();
+  const handleFacebookLogin = () => {
+    setLoading(true);
+    return signInWithPopup(auth, facebookProvider);
+  };
 
   // =============== google login function ===============
   const googleProvider = new GoogleAuthProvider();
@@ -48,13 +49,12 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, googleProvider);
   };
 
-
-    // =============== Github login function ===============
-    const githubProvider = new GoogleAuthProvider();
-    const handleGithubLogin = () => {
-      setLoading(true);
-      return signInWithPopup(auth, githubProvider);
-    };
+  // =============== Github login function ===============
+  const githubProvider = new GithubAuthProvider();
+  const handleGithubLogin = () => {
+    setLoading(true);
+    return signInWithPopup(auth, githubProvider);
+  };
 
   // ============== monitoring current user ==============
   useEffect(() => {
@@ -64,9 +64,7 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     });
 
-    return () => {
-      return unSubscribe();
-    };
+    return () => unSubscribe();
   }, []);
   // =============== monitoring current user ==============
 
@@ -80,7 +78,7 @@ const AuthProvider = ({ children }) => {
     handleFacebookLogin,
     handleGoogleLogin,
     handleGithubLogin,
-    logout
+    logout,
   };
 
   return (

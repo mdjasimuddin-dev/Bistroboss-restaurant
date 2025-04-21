@@ -61,7 +61,6 @@ async function run() {
         // ================= add to Cart route  =========================
         app.post('/cart', async (req, res) => {
             const reqBody = req.body
-            console.log(reqBody);
             const result = await cartCollection.insertOne(reqBody)
             res.send(result)
         })
@@ -84,8 +83,17 @@ async function run() {
             res.send(result)
         })
 
-        // ================== Item Update patch request end =================
-
+        // ================== User store in Database =================
+        app.post('/user', async (req, res) => {
+            const reqBody = req.body
+            const query = { email: reqBody.email }
+            const isExit = await usersCollection.findOne(query)
+            if (isExit) {
+                return res.send({ message: "User already existing", insertedId: null })
+            }
+            const result = await usersCollection.insertOne(reqBody)
+            res.send(result)
+        })
 
 
         //==================== menu item post request =======================

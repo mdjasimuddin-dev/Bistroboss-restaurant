@@ -10,10 +10,7 @@ const MyCart = () => {
 
   return (
     <div className="bg-base-200 p-10 ">
-      <SectionTitle
-        subTitle="--- My Cart ---"
-        sectionTitle="WANNA ADD MORE?"
-      ></SectionTitle>
+      <SectionTitle subTitle="--- My Cart ---" sectionTitle="WANNA ADD MORE?" />
 
       <div className="bg-white p-10 mt-5 w-2/3 mx-auto">
         <div className=" grid grid-cols-3 text-center font-cinzel text-2xl font-semibold">
@@ -34,7 +31,7 @@ const MyCart = () => {
         </div>
 
         {carts.map((item, index) => (
-          <CartList items={item} index={index} key={index} refetch={refetch}></CartList>
+          <CartList items={item} index={index} key={index} refetch={refetch} />
         ))}
       </div>
     </div>

@@ -3,26 +3,51 @@ import { Link, useNavigate } from "react-router-dom";
 import loginImg from "./../../assets/login/authentication2.png";
 import SocialLogin from "./../Login/components/SocialLogin";
 import { AuthContext } from "../../Provider/AuthProvider";
+import { updateProfile } from "firebase/auth";
+import useAxiosPublic from "./../../Hooks/useAxiosPublic";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   const navigate = useNavigate();
-  const { createUser} = useContext(AuthContext);
-
+  const { createUser } = useContext(AuthContext);
+  const axiosPublic = useAxiosPublic();
 
   const handleSingUp = (e) => {
     e.preventDefault();
-    // const form = e.target
-    // const name = form.value('name');
-    // const email = form.value("email");
-    // const password = form.value("password");
 
     createUser(email, password)
       .then((result) => {
         console.log(result.user);
-        navigate('/')
+
+        updateProfile(result.user, {
+          displayName: name,
+          photoURL: photoURL,
+        }).then(() => {
+          // create user entry in the database
+          const userInfo = {
+            name: name,
+            email: email,
+            photo: photoURL,
+          };
+
+          axiosPublic
+            .post("/user", userInfo)
+            .then((res) => {
+              console.log(res);
+              if (res.data.insertedId) {
+                console.log("user added to the database");
+                // reset();
+                navigate("/");
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              alert("Something went wrong. Please try again!");
+            });
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -30,7 +55,6 @@ const SignUp = () => {
   };
 
   //   user create use google
- 
 
   return (
     <div className="my-10">
@@ -69,6 +93,20 @@ const SignUp = () => {
                   name="email"
                   className="input w-full text-base px-3 py-6 border-none"
                   placeholder="Enter your email"
+                />
+              </fieldset>
+
+              <fieldset className="fieldset">
+                <label className="fieldset-label text-xl">
+                  Profile Picture
+                </label>
+                <input
+                  onChange={(e) => setPhotoURL(e.target.value)}
+                  value={photoURL}
+                  type="text"
+                  name="photoURL"
+                  className="input w-full text-base px-3 py-6 border-none"
+                  placeholder="Enter Photo URL"
                 />
               </fieldset>
 

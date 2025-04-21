@@ -11,16 +11,21 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 
 import quoteImg from "./../../../assets/Home/quote-left.png";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
+  const axiosPublic = useAxiosPublic();
 
   useEffect(() => {
-    fetch("http://localhost:5000/reviews")
-      .then((res) => res.json())
-      .then((data) => setReviews(data));
+    axiosPublic.get("/reviews").then((data) => {
+      setReviews(data.data);
+    });
   }, []);
-  
+
+
+  console.log(reviews);
+
   return (
     <div className="my-5">
       <SectionTitle
