@@ -12,6 +12,7 @@ import Dashboard from "../Layout/Dashboard";
 import AdminHome from "../Pages/Dashboard/AdminHome";
 import UserHome from "../Pages/Dashboard/UserHome";
 import MyCart from "../Pages/Dashboard/MyCart";
+import AllUsers from "../Pages/Dashboard/AllUsers";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
       {
         path : 'myCarts',
         element : <MyCart/>
+      },
+      {
+        path : 'allUsers',
+        element : <AllUsers/>
       }
     ]
   },

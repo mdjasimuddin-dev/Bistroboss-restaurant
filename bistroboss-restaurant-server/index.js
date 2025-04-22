@@ -96,7 +96,11 @@ async function run() {
         })
 
 
-        //==================== menu item post request =======================
+        //==================== all user get =======================
+        app.get('/users', async (req, res) => {
+            const result = await usersCollection.find().toArray()
+            res.send(result)
+        })
 
         //==================== menu item post request end ===================
 
