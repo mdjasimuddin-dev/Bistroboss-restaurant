@@ -5,7 +5,7 @@ import AllUserList from "./Components/AllUserList";
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: users = [] } = useQuery({
+  const {refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -34,7 +34,7 @@ const AllUsers = () => {
         </div>
 
         {users.map((user, index) => (
-          <AllUserList key={index} user={user} index={index}></AllUserList>
+          <AllUserList key={index} user={user} index={index} refetch={refetch}></AllUserList>
         ))}
       </div>
     </div>

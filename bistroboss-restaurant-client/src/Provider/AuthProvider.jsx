@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   FacebookAuthProvider,
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -55,6 +56,7 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithPopup(auth, githubProvider);
   };
+
 
   // ============== monitoring current user ==============
   useEffect(() => {

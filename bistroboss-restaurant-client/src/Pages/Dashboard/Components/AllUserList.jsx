@@ -1,13 +1,14 @@
 import { MdDelete } from "react-icons/md";
-import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { RiAdminFill } from "react-icons/ri";
 import { FaUsers } from "react-icons/fa";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const AllUserList = ({ user, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
 
-  const handleDeleteItem = (id) => {
+  const handleDeleteUser = (id) => {
+    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -19,14 +20,14 @@ const AllUserList = ({ user, index, refetch }) => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete(`/delete/${id}`)
+          .delete(`/user/${id}`)
           .then((result) => {
-            console.log(result);
+            console.log(result.data);
             if (result.data.deletedCount > 0) {
               refetch();
               Swal.fire({
                 title: "Deleted!",
-                text: "Your file has been deleted.",
+                text: "User has been deleted.",
                 icon: "success",
               });
             }
@@ -38,6 +39,8 @@ const AllUserList = ({ user, index, refetch }) => {
     });
   };
 
+  const handleUserRole = () => {};
+
   return (
     <div>
       <div className="grid grid-cols-5 my-5 items-center">
@@ -46,12 +49,20 @@ const AllUserList = ({ user, index, refetch }) => {
           <img src={user?.photo} className="h-16" alt="Something is wrong" />
         </div>
         <h3 className="px-5 col-span-2 pl-20">{user?.name}</h3>
-        <button className="">
-          {user?.role === "admin" ? <RiAdminFill /> : <FaUsers size={26}/>}
-        </button>
+        <div onClick={handleUserRole} className="">
+          <p>
+            <label className="btn btn-ghost">
+              {user?.role === "admin" ? <RiAdminFill /> : <FaUsers size={26} />}
+              <select>
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+              </select>
+            </label>
+          </p>
+        </div>
         <p>
           <button
-            onClick={() => handleDeleteItem(user._id)}
+            onClick={() => handleDeleteUser(user._id)}
             className="btn hover:bg-transparent border-2 border-red-400 bg-red-400 text-white hover:text-red-400"
           >
             <MdDelete size={20} />

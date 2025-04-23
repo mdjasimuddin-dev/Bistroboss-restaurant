@@ -102,10 +102,27 @@ async function run() {
             res.send(result)
         })
 
-        //==================== menu item post request end ===================
+        //==================== user Delete route ===================
+        app.delete('/user/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            const result = await usersCollection.deleteOne(query)
+            res.send(result)
+        })
 
 
-        //==================== menu item post request =======================
+        //==================== User update =======================
+        app.patch('/user/:id', async (req, res) => {
+            const id = req.params.id
+            const reqBody = req.body
+
+            const updateInfo = {
+                role: reqBody.role
+            }
+            const query = { _id: new ObjectId(id) }
+            const result = await usersCollection.updateOne(query, updateInfo, { upsert: true })
+            res.send(result);
+        })
 
         //==================== menu item post request end ===================
 
