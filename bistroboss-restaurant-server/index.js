@@ -117,7 +117,9 @@ async function run() {
             const reqBody = req.body
 
             const updateInfo = {
-                role: reqBody.role
+                $set: {
+                    role: reqBody.role
+                }
             }
             const query = { _id: new ObjectId(id) }
             const result = await usersCollection.updateOne(query, updateInfo, { upsert: true })

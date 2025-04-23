@@ -39,7 +39,25 @@ const AllUserList = ({ user, index, refetch }) => {
     });
   };
 
-  const handleUserRole = () => {};
+  const handleUserRole = (id, data) => {
+    axiosSecure
+      .patch(`/user/${id}`, { role: data })
+      .then((result) => {
+        console.log(result);
+        if (result?.data?.modifiedCount > 0) {
+          Swal.fire({
+            title: "Congratulations!",
+            text: `${user?.name} now ${data}`,
+            icon: "success",
+          });
+
+          refetch();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -49,17 +67,19 @@ const AllUserList = ({ user, index, refetch }) => {
           <img src={user?.photo} className="h-16" alt="Something is wrong" />
         </div>
         <h3 className="px-5 col-span-2 pl-20">{user?.name}</h3>
-        <div onClick={handleUserRole} className="">
-          <p>
-            <label className="btn btn-ghost">
-              {user?.role === "admin" ? <RiAdminFill /> : <FaUsers size={26} />}
-              <select>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-              </select>
-            </label>
-          </p>
-        </div>
+        <p>
+          <button
+            onClick={() => handleUserRole(user?._id)}
+            className="btn btn-ghost"
+          >
+            {user?.role === "admin" ? (
+              <RiAdminFill size={26} onClick={()=>handleUserRole(user?._id, 'user')}/>
+            ) : (
+              <FaUsers size={26} onClick={()=>handleUserRole(user?._id, 'admin')} />
+            )}
+          </button>
+          {/* {user?.role === "admin" ? <RiAdminFill /> : <FaUsers size={26} />} */}
+        </p>
         <p>
           <button
             onClick={() => handleDeleteUser(user._id)}
