@@ -1,6 +1,5 @@
 import {
   createUserWithEmailAndPassword,
-  deleteUser,
   FacebookAuthProvider,
   GithubAuthProvider,
   GoogleAuthProvider,
@@ -11,12 +10,14 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
 
   // ============== User create email/password ===============
   const createUser = (email, password) => {
@@ -57,13 +58,33 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, githubProvider);
   };
 
-
   // ============== monitoring current user ==============
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       console.log("Current User : ", currentUser);
       setLoading(false);
+
+      const UserInfo = {
+        email: currentUser?.email,
+      };
+
+      if (currentUser) {
+        // token create route implement
+        axiosSecure
+          .post("/createToken", UserInfo)
+          .then((result) => {
+            console.log(result.data);
+            if (result.data.token) {
+              localStorage.setItem("BistroBoss", result.data.token);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        localStorage.removeItem("BistroBoss");
+      }
     });
 
     return () => unSubscribe();

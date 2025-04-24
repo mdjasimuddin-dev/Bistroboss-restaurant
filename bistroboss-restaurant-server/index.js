@@ -3,6 +3,7 @@ const cors = require('cors')
 require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const port = process.env.PORT || 5000
+const jwt = require('jsonwebtoken')
 
 
 
@@ -28,6 +29,10 @@ const client = new MongoClient(uri, {
     }
 });
 
+
+
+
+
 async function run() {
     try {
         // Connect the client to the server	(optional starting in v4.7)
@@ -38,6 +43,38 @@ async function run() {
         const menuCollection = client.db('bistroDB').collection('menu')
         const reviewCollection = client.db('bistroDB').collection('reviews')
         const cartCollection = client.db('bistroDB').collection('carts');
+
+
+        //================== token create route ====================
+        app.post('/createToken', (req, res) => {
+            const reqBody = req.body
+            // console.log(reqBody);
+            const token = jwt.sign(reqBody, process.env.TOKEN_SECRETE_KEY, {
+                expiresIn: '1d',
+            })
+            res.send({ token })
+        })
+
+
+        const TokenVerify = (req, res, next) => {
+            const authToken = req.headers.authorization
+
+            if (!authToken) {
+                return res.status(401).send({ message: "unauthorized access" });
+            }
+
+            const tokenValue = authToken.split(' ')[1]
+            console.log(tokenValue);
+
+            jwt.verify(tokenValue, process.env.TOKEN_SECRETE_KEY, (err, decode) => {
+                if (err) {
+                    return res.status(403).send({ message: "Forbidden Access" });
+                }
+                req.decode = decode
+                console.log(req.decode);
+            })
+
+        }
 
 
 
@@ -97,7 +134,9 @@ async function run() {
 
 
         //==================== all user get =======================
-        app.get('/users', async (req, res) => {
+        app.get('/users', TokenVerify, async (req, res) => {
+            const user = req.headers.authorization
+            console.log(user);
             const result = await usersCollection.find().toArray()
             res.send(result)
         })

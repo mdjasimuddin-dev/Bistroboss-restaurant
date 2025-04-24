@@ -5,7 +5,7 @@ import AllUserList from "./Components/AllUserList";
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
 
-  const {refetch, data: users = [] } = useQuery({
+  const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("/users");
@@ -17,7 +17,7 @@ const AllUsers = () => {
     <div className="bg-base-200 p-10 h-screen">
       <div className="bg-white p-10 mt-5 w-2/3 mx-auto">
         <div className=" grid grid-cols-2  font-cinzel text-2xl font-semibold">
-          <h1 >Total User : {users.length}</h1>
+          <h1>Total User : {users.length}</h1>
           {/* <h1>Total Price : {totalPrice.toFixed(2)}</h1> */}
           <h3 className="text-end">
             <button className="btn text-2xl hover:bg-transparent border-2 border-red-400 bg-red-400 text-white hover:text-red-400">
@@ -34,7 +34,12 @@ const AllUsers = () => {
         </div>
 
         {users.map((user, index) => (
-          <AllUserList key={index} user={user} index={index} refetch={refetch}></AllUserList>
+          <AllUserList
+            key={index}
+            user={user}
+            index={index}
+            refetch={refetch}
+          ></AllUserList>
         ))}
       </div>
     </div>
