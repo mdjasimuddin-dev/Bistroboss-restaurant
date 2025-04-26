@@ -39,15 +39,15 @@ const AllUserList = ({ user, index, refetch }) => {
     });
   };
 
-  const handleUserRole = (id, data) => {
+  const handleUserRole = (id) => {
     axiosSecure
-      .patch(`/user/${id}`, { role: data })
+      .patch(`/user/${id}`, { role: "admin" })
       .then((result) => {
         console.log(result);
         if (result?.data?.modifiedCount > 0) {
           Swal.fire({
             title: "Congratulations!",
-            text: `${user?.name} now ${data}`,
+            text: `${user?.name} now admin`,
             icon: "success",
           });
 
@@ -73,7 +73,7 @@ const AllUserList = ({ user, index, refetch }) => {
             className="btn btn-ghost"
           >
             {user?.role === "admin" ? (
-              <RiAdminFill size={26} onClick={()=>handleUserRole(user?._id, 'user')}/>
+              <RiAdminFill size={26}/>
             ) : (
               <FaUsers size={26} onClick={()=>handleUserRole(user?._id, 'admin')} />
             )}

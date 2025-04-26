@@ -64,14 +64,13 @@ async function run() {
             }
 
             const tokenValue = authToken.split(' ')[1]
-            console.log(tokenValue);
 
             jwt.verify(tokenValue, process.env.TOKEN_SECRETE_KEY, (err, decode) => {
                 if (err) {
                     return res.status(403).send({ message: "Forbidden Access" });
                 }
                 req.decode = decode
-                console.log(req.decode);
+                next()
             })
 
         }
@@ -96,7 +95,7 @@ async function run() {
 
 
         // ================= add to Cart route  =========================
-        app.post('/cart', async (req, res) => {
+        app.post('/cart', TokenVerify, async (req, res) => {
             const reqBody = req.body
             const result = await cartCollection.insertOne(reqBody)
             res.send(result)
@@ -113,7 +112,7 @@ async function run() {
 
 
         // ================== Delete Cart item =================
-        app.delete('/delete/:id', async (req, res) => {
+        app.delete('/delete/:id', TokenVerify, async (req, res) => {
             const id = req.params.id
             const filter = { _id: new ObjectId(id) }
             const result = await cartCollection.deleteOne(filter)
@@ -135,14 +134,12 @@ async function run() {
 
         //==================== all user get =======================
         app.get('/users', TokenVerify, async (req, res) => {
-            const user = req.headers.authorization
-            console.log(user);
             const result = await usersCollection.find().toArray()
             res.send(result)
         })
 
         //==================== user Delete route ===================
-        app.delete('/user/:id', async (req, res) => {
+        app.delete('/user/:id', TokenVerify, async (req, res) => {
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
             const result = await usersCollection.deleteOne(query)
@@ -150,8 +147,8 @@ async function run() {
         })
 
 
-        //==================== User update =======================
-        app.patch('/user/:id', async (req, res) => {
+        //==================== User role update =======================
+        app.patch('/user/:id', TokenVerify, async (req, res) => {
             const id = req.params.id
             const reqBody = req.body
 
@@ -160,12 +157,34 @@ async function run() {
                     role: reqBody.role
                 }
             }
+
             const query = { _id: new ObjectId(id) }
             const result = await usersCollection.updateOne(query, updateInfo, { upsert: true })
             res.send(result);
         })
 
-        //==================== menu item post request end ===================
+        //==================== admin route check ===================
+        app.get('/user/admin/:email', TokenVerify, async (req, res) => {
+            const email = req.params.email
+            const data = req.decode.email
+            console.log(data);
+            const user = await usersCollection.findOne({ email: email });
+
+            if (!user) {
+                return res.status(404).send({ message: "User not found" });
+            }
+
+            if (email !== req.decode.email) {
+                return res.send({ message: "Unauthorize Access Request" })
+            }
+            
+            console.log(user);
+            let admin = false;
+            if (user) {
+                admin = user?.role === "admin";
+            }
+            res.send({ admin })
+        })
 
 
 

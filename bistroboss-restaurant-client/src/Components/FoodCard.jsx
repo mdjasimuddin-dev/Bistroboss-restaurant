@@ -3,12 +3,15 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const FoodCard = ({ item }) => {
   const { image, name, recipe, price, _id } = item;
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
   const location = useLocation();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   const handleAddToCart = () => {
     if (user) {
@@ -22,11 +25,11 @@ const FoodCard = ({ item }) => {
         price,
       };
 
-      axios
-        .post("http://localhost:5000/cart", cartItem)
+      axiosSecure
+        .post("/cart", cartItem)
         .then((data) => {
           console.log(data);
-          if (data.data.insertedId) {
+          if (data?.data?.insertedId) {
             Swal.fire({
               position: "top-end",
               icon: "success",
@@ -51,7 +54,7 @@ const FoodCard = ({ item }) => {
       }).then((result) => {
         if (result.isConfirmed) {
           //             // send the user to login page
-          navigate("/login", { state: location.pathname })
+          navigate("/login", { state: location.pathname });
           // <Navigate
           //   to="/login"
           //   state={location.pathname}

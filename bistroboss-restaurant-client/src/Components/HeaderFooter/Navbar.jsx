@@ -49,17 +49,17 @@ const Navbar = () => {
         </NavLink>
       </li>
 
-      <li>
-        <NavLink to="/dashboard/myCarts">
-          <TiShoppingCart size={32} className="relative rounded-full " />
-          <div className="absolute bg-red-600 w-5 h-5 text-white rounded-full ml-6 mb-5 text-center">
-            {cartItem?.length ? cartItem.length : "0"}
-          </div>
-        </NavLink>
-      </li>
-
       {user ? (
         <>
+          <li>
+            <NavLink to="/dashboard/myCarts">
+              <TiShoppingCart size={32} className="relative rounded-full " />
+              <div className="absolute bg-red-600 w-5 h-5 text-white rounded-full ml-6 mb-5 text-center">
+                {cartItem?.length ? cartItem?.length : "0"}
+              </div>
+            </NavLink>
+          </li>
+
           <li>
             <NavLink
               to="/dashboard"

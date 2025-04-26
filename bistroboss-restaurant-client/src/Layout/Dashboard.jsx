@@ -13,9 +13,18 @@ import {
 } from "react-icons/fa";
 import { RiCurrencyFill } from "react-icons/ri";
 import { GiStarsStack } from "react-icons/gi";
+import useAdmin from "../Hooks/useAdmin";
+// import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const [isAdmin, isLoading] = useAdmin();
+
+  console.log("isAdmin from hook:", isAdmin);
+  console.log("isLoading:", isLoading);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // লোডিং দেখাও অথবা Spinner ইউজ করো
+  }
 
   return (
     <div className="flex">

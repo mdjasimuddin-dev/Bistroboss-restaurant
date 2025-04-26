@@ -10,14 +10,14 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase.config";
-import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useAxiosPublic from "./../Hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic();
 
   // ============== User create email/password ===============
   const createUser = (email, password) => {
@@ -71,10 +71,10 @@ const AuthProvider = ({ children }) => {
 
       if (currentUser) {
         // token create route implement
-        axiosSecure
+        axiosPublic
           .post("/createToken", UserInfo)
           .then((result) => {
-            console.log(result.data);
+            // console.log(result.data);
             if (result.data.token) {
               localStorage.setItem("BistroBoss", result.data.token);
             }
@@ -88,7 +88,7 @@ const AuthProvider = ({ children }) => {
     });
 
     return () => unSubscribe();
-  }, []);
+  }, [axiosPublic]);
   // =============== monitoring current user ==============
 
   const authInfo = {
