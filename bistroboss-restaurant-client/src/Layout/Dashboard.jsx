@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { IoMdHome, IoMdMenu } from "react-icons/io";
 import { MdEmail, MdOutlineRestaurant } from "react-icons/md";
@@ -14,21 +13,16 @@ import {
 import { RiCurrencyFill } from "react-icons/ri";
 import { GiStarsStack } from "react-icons/gi";
 import useAdmin from "../Hooks/useAdmin";
-// import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
-  const [isAdmin, isLoading] = useAdmin();
+  // const [isAdmin] = useAdmin();
 
-  console.log("isAdmin from hook:", isAdmin);
-  console.log("isLoading:", isLoading);
+  const [isAdmin] = useAdmin();
 
-  if (isLoading) {
-    return <div>Loading...</div>; // লোডিং দেখাও অথবা Spinner ইউজ করো
-  }
 
   return (
     <div className="flex">
-      {/* left side  */}
+      {/* left  side  */}
       <div className="w-72 bg-[#D1A054] min-h-screen px-4 py-10">
         <div className="">
           <h1 className="font-cinzel text-2xl text-black font-bold uppercase">
@@ -85,7 +79,7 @@ const Dashboard = () => {
 
               <li>
                 <NavLink
-                  to="/dashboard/allUsers"
+                  to="/dashboard/allusers"
                   className="flex items-center text-base uppercase font-cinzel font-bold"
                 >
                   <FaUsers size={26} className="mr-3" />

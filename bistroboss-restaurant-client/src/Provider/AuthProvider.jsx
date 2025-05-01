@@ -73,14 +73,15 @@ const AuthProvider = ({ children }) => {
         // token create route implement
         axiosPublic
           .post("/createToken", UserInfo)
-          .then((result) => {
-            // console.log(result.data);
-            if (result.data.token) {
-              localStorage.setItem("BistroBoss", result.data.token);
+          .then((res) => {
+            console.log(res.data);
+            if (res?.data?.token) {
+              localStorage.setItem("BistroBoss", res.data.token);
+              console.log("token saved in local storage");
             }
           })
           .catch((err) => {
-            console.log(err);
+            console.log("can't create token: ", err)
           });
       } else {
         localStorage.removeItem("BistroBoss");

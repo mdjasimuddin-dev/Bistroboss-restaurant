@@ -5,10 +5,11 @@ import AllUserList from "./Components/AllUserList";
 const AllUsers = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { refetch, data: users = [] } = useQuery({
+  const { refetch, data: users = [] } = useQuery({  
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/users");
+      const res = await axiosSecure.get("/allusers");
+      console.log(res.data);
       return res.data;
     },
   });

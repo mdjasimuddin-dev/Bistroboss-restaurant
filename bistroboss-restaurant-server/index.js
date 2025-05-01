@@ -1,4 +1,5 @@
 const express = require('express')
+const app = express()
 const cors = require('cors')
 require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
@@ -7,18 +8,18 @@ const jwt = require('jsonwebtoken')
 
 
 
-const app = express()
+
 
 const corsOptions = {
     origin: ["http://localhost:5173"],
     credentials: true
 }
 
-
+// middleware 
 app.use(cors(corsOptions))
 app.use(express.json())
 
-
+// mongodb url 
 const uri = `mongodb+srv://${process.env.USER_DB}:${process.env.PASSWORD_DB}@cluster0.wukjrsy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 const client = new MongoClient(uri, {
@@ -45,7 +46,7 @@ async function run() {
         const cartCollection = client.db('bistroDB').collection('carts');
 
 
-        //================== token create route ====================
+        //================== jwt token create route ====================
         app.post('/createToken', (req, res) => {
             const reqBody = req.body
             // console.log(reqBody);
@@ -55,29 +56,81 @@ async function run() {
             res.send({ token })
         })
 
-
+        // middlewares
         const TokenVerify = (req, res, next) => {
-            const authToken = req.headers.authorization
+            const authToken = req?.headers?.authorization
+            console.log("Token Received", authToken);
 
             if (!authToken) {
-                return res.status(401).send({ message: "unauthorized access" });
+                return res.status(401).send({ message: "Unauthorized access" });
             }
 
             const tokenValue = authToken.split(' ')[1]
 
-            jwt.verify(tokenValue, process.env.TOKEN_SECRETE_KEY, (err, decode) => {
+            jwt.verify(tokenValue, process.env.TOKEN_SECRETE_KEY, (err, decoded) => {
                 if (err) {
+                    console.log("Token Verify Failed");
                     return res.status(403).send({ message: "Forbidden Access" });
                 }
-                req.decode = decode
+                req.decoded = decoded
+                console.log(req?.decoded);
                 next()
             })
 
         }
 
 
+        // use verify admin after verifyToken
+        const verifyAdmin = async (req, res, next) => {
+            const email = req.decoded.email
+            console.log(email);
+            const query = { email: email }
+            const user = await usersCollection.findOne(query)
+            const admin = user?.role === 'admin'
+            if (!admin) {
+                return res.status(403).send({ message: "You are not a admin, forbidden access" })
+            }
+            next()
+        }
 
-        //==================== menu item route start =======================
+
+        // user related api 
+
+        //==================== all user get =======================
+        app.get('/allusers', TokenVerify, verifyAdmin, async (req, res) => {
+            const result = await usersCollection.find().toArray()
+            res.send(result)
+        })
+
+
+        //==================== admin route check ===================
+        app.get('/user/admin/:email', TokenVerify, async (req, res) => {
+            const email = req?.params?.email
+            const data = req.decoded
+            const query = { email: email }
+            console.log("This is Verify Email", data)
+            console.log("Params Email", email);
+
+            if (email !== req.decoded.email) {
+                return res.send({ message: "Unauthorize Access Request" })
+            }
+
+            const user = await usersCollection.findOne(query);
+
+            if (!user) {
+                return res.status(404).send({ message: "User not found" });
+            }
+
+            let admin = false;
+            if (user) {
+                admin = user?.role === "admin";
+            }
+            console.log({ admin });
+            res.send({ admin })
+        })
+
+
+        // menu item route start
         app.get('/menu', async (req, res) => {
             const result = await menuCollection.find().toArray()
             res.send(result)
@@ -103,7 +156,7 @@ async function run() {
 
 
         // ================= find cart item =========================
-        app.get('/cart/:email', async (req, res) => {
+        app.get('/cart/:email', TokenVerify, async (req, res) => {
             const userEmail = req.params.email
             const filter = { email: userEmail }
             const result = await cartCollection.find(filter).toArray()
@@ -132,14 +185,11 @@ async function run() {
         })
 
 
-        //==================== all user get =======================
-        app.get('/users', TokenVerify, async (req, res) => {
-            const result = await usersCollection.find().toArray()
-            res.send(result)
-        })
+
 
         //==================== user Delete route ===================
-        app.delete('/user/:id', TokenVerify, async (req, res) => {
+        app.delete('/user/:id', TokenVerify, verifyAdmin, async (req, res) => {
+            console.log(req.headers);
             const id = req.params.id
             const query = { _id: new ObjectId(id) }
             const result = await usersCollection.deleteOne(query)
@@ -148,7 +198,8 @@ async function run() {
 
 
         //==================== User role update =======================
-        app.patch('/user/:id', TokenVerify, async (req, res) => {
+        app.patch('/user/:id', TokenVerify, verifyAdmin, async (req, res) => {
+            console.log(req.headers);
             const id = req.params.id
             const reqBody = req.body
 
@@ -163,52 +214,11 @@ async function run() {
             res.send(result);
         })
 
-        //==================== admin route check ===================
-        app.get('/user/admin/:email', TokenVerify, async (req, res) => {
-            const email = req.params.email
-            const data = req.decode.email
-            console.log(data);
-            const user = await usersCollection.findOne({ email: email });
-
-            if (!user) {
-                return res.status(404).send({ message: "User not found" });
-            }
-
-            if (email !== req.decode.email) {
-                return res.send({ message: "Unauthorize Access Request" })
-            }
-            
-            console.log(user);
-            let admin = false;
-            if (user) {
-                admin = user?.role === "admin";
-            }
-            res.send({ admin })
-        })
 
 
 
 
 
-
-
-        //==================== carts items get request start ===================
-
-        //==================== carts items get request end ===================
-
-
-
-        //==================== carts items post request start ===================
-
-        //==================== carts items delete request end ===================
-
-
-
-        //==================== carts items delete request start ===================
-
-        //==================== carts items delete request end ===================
-
-        //=================== Payment Intent =================================
 
 
 
