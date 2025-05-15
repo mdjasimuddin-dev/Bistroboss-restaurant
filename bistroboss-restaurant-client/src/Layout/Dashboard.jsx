@@ -49,7 +49,7 @@ const Dashboard = () => {
 
               <li>
                 <NavLink
-                  to="/dashboard/addItems"
+                  to="/dashboard/addItem"
                   className="flex items-center text-base uppercase font-cinzel font-bold"
                 >
                   <MdOutlineRestaurant size={26} className="mr-3" />
@@ -111,7 +111,7 @@ const Dashboard = () => {
 
               <li>
                 <NavLink
-                  to="/dashboard/reservation"
+                  to="/dashboard/paymentHistory"
                   className="flex items-center text-base uppercase font-cinzel font-bold"
                 >
                   <RiCurrencyFill size={26} className="mr-3" />
@@ -131,7 +131,7 @@ const Dashboard = () => {
 
               <li>
                 <NavLink
-                  to="/dashboard/reservation"
+                  to="/dashboard/addReview"
                   className="flex items-center text-base uppercase font-cinzel font-bold"
                 >
                   <GiStarsStack size={26} className="mr-3" />
@@ -141,7 +141,7 @@ const Dashboard = () => {
 
               <li>
                 <NavLink
-                  to="/dashboard/reservation"
+                  to="/dashboard/myBooking"
                   className="flex items-center text-base uppercase font-cinzel font-bold"
                 >
                   <RiCurrencyFill size={26} className="mr-3" />

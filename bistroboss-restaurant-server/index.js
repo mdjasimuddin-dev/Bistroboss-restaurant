@@ -11,7 +11,9 @@ const jwt = require('jsonwebtoken')
 
 
 const corsOptions = {
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173",
+        "https://api.imgbb.com"
+    ],
     credentials: true
 }
 
@@ -213,6 +215,18 @@ async function run() {
             const result = await usersCollection.updateOne(query, updateInfo, { upsert: true })
             res.send(result);
         })
+
+
+        // Add a new item to the menu item 
+        app.post('/addItem', async (req, res) => {
+            const reqBody = req.body;
+            console.log(reqBody);
+            const result = await menuCollection.insertOne(reqBody)
+            res.send(result)
+        })
+
+
+
 
 
 

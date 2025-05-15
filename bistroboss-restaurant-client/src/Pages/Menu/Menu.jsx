@@ -9,15 +9,18 @@ import MenuCategories from "./Components/MenuCategories";
 import { useEffect, useState } from "react";
 import Cover from "../../Components/Cover";
 import SectionTitle from "./../../Components/SectionTitle";
+import useMenu from "../../Hooks/useMenu";
 
 const Menu = () => {
-  const [menu, setMenu] = useState([]);
+  // const [menu, setMenu] = useState([]);
 
-  useEffect(() => {
-    fetch("./menu.json")
-      .then((res) => res.json())
-      .then((data) => setMenu(data));
-  }, []);
+  // useEffect(() => {
+  //   fetch("./menu.json")
+  //     .then((res) => res.json())
+  //     .then((data) => setMenu(data));
+  // }, []);
+
+  const [menu] = useMenu()
 
   const offerItems = menu.filter((items) => items.category === "offered");
   const dessertItems = menu.filter((items) => items.category === "dessert");

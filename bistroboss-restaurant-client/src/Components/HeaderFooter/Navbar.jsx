@@ -4,12 +4,13 @@ import { TiShoppingCart } from "react-icons/ti";
 import { LuLogOut } from "react-icons/lu";
 import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import useCarts from "../../Hooks/useCarts";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const profilePhoto = user?.photoURL;
-  const [cartItem, setCartItem] = useState(0);
+  const [cartItem] = useCarts()
 
   const navbarOptions = (
     <>
