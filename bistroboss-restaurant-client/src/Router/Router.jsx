@@ -7,7 +7,6 @@ import Shop from "../Pages/Shop/Shop";
 import Contact from "../Pages/Contact/Contact";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/Signup/SignUp";
-import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "../Layout/Dashboard";
 import AdminHome from "../Pages/Dashboard/AdminHome";
 import UserHome from "../Pages/Dashboard/UserHome";
@@ -18,6 +17,12 @@ import Reservation from "../Pages/Dashboard/Reservation";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import AddReviews from "../Pages/Dashboard/AddReviews";
 import MyBooking from "../Pages/Dashboard/MyBooking";
+import AdminRoute from "../Router/AdminRoute";
+import PrivateRoute from "../Router/PrivateRoutes";
+import ManageItems from "../Pages/Dashboard/ManageItems";
+import UpdateItem from "../Pages/Dashboard/Updateitem";
+import { axiosPublic } from "../Hooks/useAxiosPublic";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +40,8 @@ const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
       },
+
+      
 
       {
         path: "/shop",
@@ -65,43 +72,65 @@ const router = createBrowserRouter([
   {
     path: "dashboard",
     element: <Dashboard />,
-    children : [
+    children: [
       {
-        path : 'home',
-        element : <UserHome/>
+        path: "home",
+        element: <UserHome />,
       },
       {
-        path : 'myCarts',
-        element : <MyCart/>
+        path: "myCarts",
+        element: <MyCart />,
       },
 
       {
-        path : "reservation",
-        element : <Reservation/>
+        path: "payment",
+        element : <Payment/>
+      },
+
+      {
+        path: "reservation",
+        element: <Reservation />,
       },
       {
-        path : "paymentHistory",
-        element : <PaymentHistory/>
+        path: "paymentHistory",
+        element: <PaymentHistory />,
       },
       {
-        path : "addReview",
-        element : <AddReviews/>
+        path: "addReview",
+        element: <AddReviews />,
       },
       {
-        path : "myBooking",
-        element : <MyBooking/>
+        path: "myBooking",
+        element: <MyBooking />,
       },
       {
-        path : 'allUsers',
-        element : <AllUsers/>
-      }
-      ,{
-        path : 'addItem',
-        element : <AddItem/>
-      }
-    ]
+        path: "allUsers",
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "addItem",
+        element: (
+          <AdminRoute>
+            <AddItem />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "manageItems",
+        element: <ManageItems />,
+      },
+      {
+        path: "updateItem/:id",
+        element: <UpdateItem />,
+        loader: ({ params }) =>
+          fetch(`https://localhost:5000/menu/${params.id}`),
+      },
+    ],
   },
-  
 ]);
 
 export default router;

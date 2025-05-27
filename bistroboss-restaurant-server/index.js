@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const port = process.env.PORT || 5000
 const jwt = require('jsonwebtoken')
 
@@ -46,6 +47,7 @@ async function run() {
         const menuCollection = client.db('bistroDB').collection('menu')
         const reviewCollection = client.db('bistroDB').collection('reviews')
         const cartCollection = client.db('bistroDB').collection('carts');
+        const ordersCollection = client.db('bistroDB').collection('orders');
 
 
         //================== jwt token create route ====================
@@ -137,8 +139,32 @@ async function run() {
             const result = await menuCollection.find().toArray()
             res.send(result)
         })
-        //==================== menu item route start end =======================
 
+
+        // menu item route start
+        app.get('/menu/:id', async (req, res) => {
+            const id = req.params.id
+            const query = { _id: new ObjectId(id) }
+            console.log(query);
+            const result = await menuCollection.findOne(query)
+            console.log(result);
+            try {
+                if (!result) {
+                    return res.status(404).json({ message: 'Menu item not found' });
+                }
+            } catch (error) {
+                res.status(500).json({ message: 'Server error' });
+            }
+            res.send(result)
+        })
+
+        // menu item delete
+        app.delete('/deleteMenuItem/:id', TokenVerify, verifyAdmin, async (req, res) => {
+            const id = req.params.id
+            const filter = { _id: new ObjectId(id) }
+            const result = await menuCollection.deleteOne(filter)
+            res.send(result)
+        })
 
 
         //==================== reviews route start  ===================
@@ -187,8 +213,6 @@ async function run() {
         })
 
 
-
-
         //==================== user Delete route ===================
         app.delete('/user/:id', TokenVerify, verifyAdmin, async (req, res) => {
             console.log(req.headers);
@@ -218,7 +242,7 @@ async function run() {
 
 
         // Add a new item to the menu item 
-        app.post('/addItem', async (req, res) => {
+        app.post('/addItem', TokenVerify, verifyAdmin, async (req, res) => {
             const reqBody = req.body;
             console.log(reqBody);
             const result = await menuCollection.insertOne(reqBody)
@@ -226,8 +250,60 @@ async function run() {
         })
 
 
+        // find all Cart Item for admin
+        app.get('/allCartItem', TokenVerify, async (req, res) => {
+            const userEmail = req.params.email
+            const result = await cartCollection.find().toArray()
+            res.send(result)
+        })
+
+        // create Payment Intent
+        app.post('/paymentIntent', async (req, res) => {
+            const { price } = req.body
+            const amount = parseInt(price * 100)
+            console.log(amount);
+
+            const paymentIntent = await stripe.paymentIntents.create({
+                amount: amount,
+                currency: 'usd',
+                payment_method_types: ['card']
+            })
+
+            res.send({
+                clientSecret: paymentIntent.client_secret
+            })
+        })
 
 
+
+        // Payment info save to database
+        app.post('/payments', async (req, res) => {
+            const paymentInfo = req.body
+
+            // payment info save to database 
+            const result = await ordersCollection.insertOne(paymentInfo)
+
+            // cart menu item delete
+            const query = {
+                _id: {
+                    $in: paymentInfo.cartID.map(id => new ObjectId(id))
+                }
+            }
+            const deleteCartList = await cartCollection.deleteMany(query)
+            res.send({ result, deleteCartList })
+        })
+
+
+        // Payment History
+        app.get('/paymentHistory/:email', TokenVerify, async (req, res) => {
+            const Email = req.params.email
+            const query = { email: req.params.email }
+            if (Email !== req.decoded.email) {
+                return res.status(403).send('Something is wrong.')
+            }
+            const result = await ordersCollection.find(query).toArray()
+            res.send(result)
+        })
 
 
 

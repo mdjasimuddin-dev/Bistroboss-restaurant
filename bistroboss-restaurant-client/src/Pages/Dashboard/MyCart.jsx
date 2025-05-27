@@ -2,6 +2,7 @@ import React from "react";
 import useCarts from "../../Hooks/useCarts";
 import CartList from "./Components/CartList";
 import SectionTitle from "../../Components/SectionTitle";
+import { Link } from "react-router-dom";
 
 const MyCart = () => {
   const [carts, refetch] = useCarts();
@@ -9,7 +10,7 @@ const MyCart = () => {
   const totalPrice = carts.reduce((total, item) => total + item.price, 0);
 
   return (
-    <div className="bg-base-200 p-10 ">
+    <div className="bg-base-200 p-10 min-h-screen">
       <SectionTitle subTitle="--- My Cart ---" sectionTitle="WANNA ADD MORE?" />
 
       <div className="bg-white p-10 mt-5 w-2/3 mx-auto">
@@ -17,9 +18,19 @@ const MyCart = () => {
           <h1>Total Order : {carts.length}</h1>
           <h1>Total Price : {totalPrice.toFixed(2)}</h1>
           <p>
-            <button className="btn text-2xl p-5 hover:bg-transparent border-2 border-red-400 bg-red-400 text-white hover:text-red-400">
-              Payment
-            </button>
+            {carts.length ? (
+              <>
+                <Link to="/dashboard/payment" className="btn text-2xl p-5 hover:bg-transparent border-2 border-red-400 bg-red-400 text-white hover:text-red-400">
+                  Payment
+                </Link>
+              </>
+            ) : (
+              <>
+                <button disabled className="btn text-2xl p-5 hover:bg-transparent border-2 border-red-400 bg-red-400 text-white hover:text-red-400">
+                  Payment
+                </button>
+              </>
+            )}
           </p>
         </div>
 

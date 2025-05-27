@@ -1,16 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
 import { TiShoppingCart } from "react-icons/ti";
-// import { useEffect, useState } from "react";
 import { LuLogOut } from "react-icons/lu";
-import axios from "axios";
 import useAuth from "../../Hooks/useAuth";
-import { useEffect } from "react";
 import useCarts from "../../Hooks/useCarts";
 
 const Navbar = () => {
   const { user, logout } = useAuth();
   const profilePhoto = user?.photoURL;
-  const [cartItem] = useCarts()
+  const [cartItem] = useCarts();
 
   const navbarOptions = (
     <>
@@ -102,18 +99,6 @@ const Navbar = () => {
       )}
     </>
   );
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5000/cart/${user?.email}`)
-      .then((data) => {
-        // console.log(data);
-        setCartItem(data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [cartItem]);
 
   return (
     <div className="navbar fixed z-10 text-white shadow-sm bg-black max-w-7xl h-24 top-0 ">

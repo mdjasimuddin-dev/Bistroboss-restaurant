@@ -15,7 +15,7 @@ const AllUsers = () => {
   });
 
   return (
-    <div className="bg-base-200 p-10 h-screen">
+    <div className="bg-base-200 p-10 min-h-screen">
       <div className="bg-white p-10 mt-5 w-2/3 mx-auto">
         <div className=" grid grid-cols-2  font-cinzel text-2xl font-semibold">
           <h1>Total User : {users.length}</h1>
