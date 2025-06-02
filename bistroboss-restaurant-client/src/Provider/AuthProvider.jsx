@@ -78,13 +78,15 @@ const AuthProvider = ({ children }) => {
             if (res?.data?.token) {
               localStorage.setItem("BistroBoss", res.data.token);
               console.log("token saved in local storage");
+              setLoading(false);
             }
           })
           .catch((err) => {
-            console.log("can't create token: ", err)
+            console.log("can't create token: ", err);
           });
       } else {
         localStorage.removeItem("BistroBoss");
+        setLoading(false);
       }
     });
 

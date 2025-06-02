@@ -5,9 +5,9 @@ import useAuth from "../../Hooks/useAuth";
 import useCarts from "../../Hooks/useCarts";
 
 const Navbar = () => {
+  const [cartItem] = useCarts();
   const { user, logout } = useAuth();
   const profilePhoto = user?.photoURL;
-  const [cartItem] = useCarts();
 
   const navbarOptions = (
     <>

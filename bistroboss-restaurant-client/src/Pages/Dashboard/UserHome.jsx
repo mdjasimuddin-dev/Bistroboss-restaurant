@@ -6,6 +6,7 @@ const UserHome = () => {
     console.log(user);
     return (
         <div className="space-y-10">
+            <h1 className="text-3xl font-cinzel">Hi, Welcome, <span>{user?.displayName? user?.displayName : 'Back'}</span></h1>
             <div className="grid grid-cols-3 gap-10">
                 <div className="h-40 bg-gradient-to-l from-[#FCDBFF] to-[#BB34F5] flex flex-col justify-center items-center">
                     <h1 className="text-5xl font-bold font-inter text-white">Coming Soon</h1>

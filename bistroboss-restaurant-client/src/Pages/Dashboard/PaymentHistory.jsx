@@ -24,33 +24,7 @@ const PaymentHistory = () => {
         sectionTitle="Payment History"
       />
 
-      <div className="bg-white p-10 mt-5 w-2/3 mx-auto min-h-screen">
-        <div className=" grid grid-cols-2 text-center font-cinzel text-2xl font-semibold ">
-          <h3>Total payment : {payHistory.length}</h3>
-          {/* <h3>Total Price : {totalPrice.toFixed(2)}</h3> */}
-          <p>
-            {payHistory.length ? (
-              <>
-                <Link
-                  to="/dashboard/payment"
-                  className="btn text-2xl p-5 hover:bg-transparent border-2 border-red-400 bg-red-400 text-white hover:text-red-400"
-                >
-                  Download
-                </Link>
-              </>
-            ) : (
-              <>
-                <button
-                  disabled
-                  className="btn text-2xl p-5 hover:bg-transparent border-2 border-red-400 bg-red-400 text-white hover:text-red-400"
-                >
-                  Download
-                </button>
-              </>
-            )}
-          </p>
-        </div>
-
+      <div>
         <div className="grid grid-cols-9 mt-5 bg-[#D1A054] py-5 uppercase text-white font-cinzel text-base font-semibold">
           <h2 className=" text-center w-64">image</h2>
           <h3 className="col-span-2 pl-20">User</h3>
@@ -94,8 +68,6 @@ const PaymentHistory = () => {
               </tbody>
             </table>
           </div>
-
-          /* <CartList items={item} index={index} key={index} refetch={refetch} /> */
         ))}
       </div>
     </div>

@@ -19,7 +19,6 @@ const Dashboard = () => {
 
   const [isAdmin] = useAdmin();
 
-
   return (
     <div className="flex">
       {/* left  side  */}
@@ -39,7 +38,7 @@ const Dashboard = () => {
             <>
               <li>
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/adminHome"
                   className="flex items-center text-base uppercase font-cinzel font-bold"
                 >
                   <IoMdHome size={26} className="mr-3" />
@@ -91,7 +90,7 @@ const Dashboard = () => {
             <>
               <li>
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/userHome"
                   className="flex items-center text-base uppercase font-cinzel font-bold"
                 >
                   <IoMdHome size={26} className="mr-3" />

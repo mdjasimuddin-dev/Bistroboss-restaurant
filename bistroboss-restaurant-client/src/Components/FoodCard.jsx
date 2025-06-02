@@ -1,7 +1,5 @@
-import { useContext } from "react";
-import { AuthContext } from "../Provider/AuthProvider";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAuth from "../Hooks/useAuth";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
