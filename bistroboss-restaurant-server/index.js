@@ -307,6 +307,83 @@ async function run() {
 
 
 
+        app.get('/web-summarize', async (req, res) => {
+            try {
+                const users = await usersCollection.estimatedDocumentCount()
+                const totalMenu = await menuCollection.estimatedDocumentCount()
+
+                // Debug: Orders collection চেক করুন
+                const orderCount = await ordersCollection.estimatedDocumentCount()
+                console.log('Total orders:', orderCount)
+
+                const result = await ordersCollection.aggregate([
+                    {
+                        $group: {
+                            _id: null,
+                            totalRevenue: {
+                                $sum: '$amount' // অথবা সঠিক field name
+                            }
+                        }
+                    }
+                ]).toArray()
+                const revenue = result.length > 0 ? result[0].totalRevenue : 0
+
+                res.send({
+                    "users": users,
+                    "menu": totalMenu,
+                    "totalSale": revenue / 100,
+                    "orderCount": orderCount // Debug info
+                })
+            } catch (error) {
+                console.error('Error:', error)
+                res.status(500).send({ error: 'Internal server error' })
+            }
+        })
+
+
+        // product find by category 
+        app.get('/web-orderStarts', async (req, res) => {
+            const result = await ordersCollection.aggregate([
+                {
+                    $unwind: '$menuID'
+                },
+                {
+                    $lookup: {
+                        from: 'menu',
+                        localField: 'menuID',
+                        foreignField: '_id',
+                        as: 'menuItems'
+                    }
+                },
+                {
+                    $unwind: '$menuItems'
+                },
+                {
+                    $group: {
+                        _id: '$menuItems.category',
+                        quantity: {
+                            $sum: 1
+                        },
+                        totalRevinew: {
+                            $sum: '$menuItems.price'
+                        }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        category: '$_id',
+                        quantity: '$quantity',
+                        revinew: '$totalRevinew'
+                    }
+                }
+            ]).toArray()
+
+            res.send(result)
+        })
+
+
+
 
 
 
