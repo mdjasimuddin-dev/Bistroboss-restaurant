@@ -13,7 +13,8 @@ const jwt = require('jsonwebtoken')
 
 const corsOptions = {
     origin: ["http://localhost:5173",
-        "https://api.imgbb.com"
+        "https://api.imgbb.com",
+        "https://bistro-boss-restaurant-97659.web.app"
     ],
     credentials: true
 }
